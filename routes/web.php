@@ -13,13 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Route::get('app/dataTag','AdminController@dataTag' );
+Route::post('app/createTag','AdminController@storeTag' );
+Route::post('app/updateTag','AdminController@updateTag' );
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testpage', function () {
-    return view('welcome');
-});
 
 Route::any('{slug}', function () {
     return view('welcome');

@@ -15,6 +15,8 @@ class CreateBlogcategoriesTable extends Migration
     {
         Schema::create('blogcategories', function (Blueprint $table) {
             $table->id();
+            $table->integer('blog_id')->unsigned();
+            $table->integer('category_id')->unsigned();
             $table->timestamps();
         });
     }
