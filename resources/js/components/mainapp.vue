@@ -25,6 +25,9 @@
                 <router-link to="tags">
                   <Icon type="ios-paper" />Tags
                 </router-link>
+                <router-link to="category">
+                  <Icon type="ios-paper" />Category
+                </router-link>
               </li>
             </ul>
           </div>
