@@ -3,11 +3,8 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 
-import firstPage from './components/pages/myNewVuePage'
-import newRoutePage from './components/pages/myNewRoutePage'
-import hook from './components/pages/basic/hooks'
 import home from './components/pages/home'
-import tags from './components/pages/tags'
+import tags from './components/pages/admin/tags'
 
 
 
@@ -23,25 +20,6 @@ const routes = [
         component: tags
     },
 
-
-    {
-        path: '/my-new-vue-route',
-        component: firstPage
-    },
-    {
-        path: '/new-route',
-        component: newRoutePage
-    },
-    //hooks
-    {
-        path: '/hooks',
-        component: hook
-    },
-    //more basic
-    {
-        path: '/datas',
-        component: () => import('./components/pages/basic/datas.vue')
-    },
 
 ]
 

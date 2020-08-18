@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('app/dataTag','AdminController@dataTag' );
-Route::post('app/createTag','AdminController@storeTag' );
-Route::post('app/updateTag','AdminController@updateTag' );
+Route::get('app/dataTag','Admin\TagController@dataTag' );
+Route::post('app/createTag','Admin\TagController@store' );
+Route::post('app/updateTag','Admin\TagController@update' );
+Route::delete('app/deleteTag','Admin\TagController@destroy' );
 
 
 Route::get('/', function () {
