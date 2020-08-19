@@ -4,6 +4,33 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        counter: 1000
+        deleteObj: {
+            title: '',
+            deleteModal: false,
+            url: '',
+            data: null,
+            index: -1,
+            isDeleted: false
+        }
+    },
+    getters: {
+        getDeleteObj(state) {
+            return state.deleteObj
+        }
+    },
+
+    mutations: {
+        setDeleteModal(state, data) {
+            const obj = {
+                deleteModal: false,
+                index: state.deleteObj.index,
+                isDeleted: data
+            }
+            state.deleteObj = obj
+        },
+        setDeleteModalObj(state, data) {
+            state.deleteObj = data
+        }
+
     }
 })

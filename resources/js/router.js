@@ -3,9 +3,9 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 
-import home from './components/pages/home'
-import tags from './components/pages/admin/tags'
-import category from './components/pages/admin/category'
+import home from './components/home'
+import tags from './components/admin/pages/tags'
+import category from './components/admin/pages/category'
 
 
 
