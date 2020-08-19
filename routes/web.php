@@ -30,10 +30,10 @@ Route::delete('app/deleteImageCategory','Admin\CategoryController@deleteImage' )
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 
 Route::any('{slug}', function () {
-    return view('welcome');
+    return view('index');
 });
