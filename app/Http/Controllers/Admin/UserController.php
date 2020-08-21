@@ -12,7 +12,12 @@ class UserController extends Controller
 
     public function dataUser()
     {
-        return User::where('userType','!=','user')->orderBy('created_at','DESC')->get();
+        if (request()->ajax()){
+             return User::where('userType','!=','user')->orderBy('created_at','DESC')->get();
+        }else{
+            return abort(404);
+        }
+
     }
 
     public function store(Request $request)

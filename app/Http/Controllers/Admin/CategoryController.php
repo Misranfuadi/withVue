@@ -11,7 +11,11 @@ class CategoryController extends Controller
 
     public function dataCategory()
     {
-        return Category::orderBy('created_at','DESC')->get();
+        if (request()->ajax()){
+            return Category::orderBy('created_at','DESC')->get();
+        }else{
+            return abort(404);
+        }
     }
 
     public function store(Request $request)
