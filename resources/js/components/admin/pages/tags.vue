@@ -48,7 +48,7 @@
             <Button type="default" @click="addModal=false">Close</Button>
             <Button
               type="primary"
-              @click="addTag"
+              @click="addData"
               :loading="isLoading"
             >{{ isLoading?'Adding...':'Add tag' }}</Button>
           </div>
@@ -61,7 +61,7 @@
             <Button type="default" @click="editModal=false">Close</Button>
             <Button
               type="primary"
-              @click="editTag"
+              @click="updateData"
               :loading="isLoading"
             >{{ isLoading?'Editing...':'Edit tag' }}</Button>
           </div>
@@ -96,7 +96,7 @@ export default {
     };
   },
   methods: {
-    async addTag() {
+    async addData() {
       if (this.data.tagName.trim() == "") {
         return this.error("Tag name is required");
       }
@@ -130,7 +130,7 @@ export default {
       this.index = index;
     },
 
-    async editTag() {
+    async updateData() {
       if (this.editData.tagName.trim() == "") {
         return this.error("Tag name is required");
       }

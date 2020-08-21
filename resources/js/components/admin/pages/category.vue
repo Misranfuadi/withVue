@@ -76,7 +76,7 @@
             <Button type="default" @click="addModal=false">Close</Button>
             <Button
               type="primary"
-              @click="addCategory"
+              @click="addData"
               :loading="isLoading"
             >{{ isLoading?'Adding...':'Add category' }}</Button>
           </div>
@@ -115,7 +115,7 @@
             <Button type="default" @click="closeEditModal">Close</Button>
             <Button
               type="primary"
-              @click="editCategory"
+              @click="updateData"
               :loading="isLoading"
             >{{ isLoading?'Editing...':'Edit category' }}</Button>
           </div>
@@ -154,7 +154,7 @@ export default {
     };
   },
   methods: {
-    async addCategory() {
+    async addData() {
       if (this.data.name.trim() == "") {
         return this.error("Category name is required");
       }
@@ -186,13 +186,17 @@ export default {
     },
 
     showEditModal(category, index) {
-      this.editData = category;
+      let obj = {
+        id: category.id,
+        name: category.name,
+      };
+      this.editData = obj;
       this.editModal = true;
       this.isEditing = true;
       this.index = index;
     },
 
-    async editCategory() {
+    async updateData() {
       if (this.editData.name.trim() == "") {
         return this.error("Category name is required");
       }

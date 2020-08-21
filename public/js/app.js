@@ -2189,7 +2189,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    addCategory: function addCategory() {
+    addData: function addData() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2257,12 +2257,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     showEditModal: function showEditModal(category, index) {
-      this.editData = category;
+      var obj = {
+        id: category.id,
+        name: category.name
+      };
+      this.editData = obj;
       this.editModal = true;
       this.isEditing = true;
       this.index = index;
     },
-    editCategory: function editCategory() {
+    updateData: function updateData() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -2616,7 +2620,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    addTag: function addTag() {
+    addData: function addData() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2677,7 +2681,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.editModal = true;
       this.index = index;
     },
-    editTag: function editTag() {
+    updateData: function updateData() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3022,7 +3026,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     showEditModal: function showEditModal(user, index) {
-      this.editData = user;
+      var obj = {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        userType: user.userType
+      };
+      this.editData = obj;
       this.editModal = true;
       this.index = index;
     },
@@ -68410,7 +68420,7 @@ var render = function() {
                     "Button",
                     {
                       attrs: { type: "primary", loading: _vm.isLoading },
-                      on: { click: _vm.addCategory }
+                      on: { click: _vm.addData }
                     },
                     [
                       _vm._v(
@@ -68542,7 +68552,7 @@ var render = function() {
                     "Button",
                     {
                       attrs: { type: "primary", loading: _vm.isLoading },
-                      on: { click: _vm.editCategory }
+                      on: { click: _vm.updateData }
                     },
                     [
                       _vm._v(
@@ -68760,7 +68770,7 @@ var render = function() {
                     "Button",
                     {
                       attrs: { type: "primary", loading: _vm.isLoading },
-                      on: { click: _vm.addTag }
+                      on: { click: _vm.addData }
                     },
                     [_vm._v(_vm._s(_vm.isLoading ? "Adding..." : "Add tag"))]
                   )
@@ -68820,7 +68830,7 @@ var render = function() {
                     "Button",
                     {
                       attrs: { type: "primary", loading: _vm.isLoading },
-                      on: { click: _vm.editTag }
+                      on: { click: _vm.updateData }
                     },
                     [_vm._v(_vm._s(_vm.isLoading ? "Editing..." : "Edit tag"))]
                   )

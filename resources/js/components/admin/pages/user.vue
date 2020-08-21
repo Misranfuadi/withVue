@@ -170,7 +170,13 @@ export default {
     },
 
     showEditModal(user, index) {
-      this.editData = user;
+      let obj = {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        userType: user.userType,
+      };
+      this.editData = obj;
       this.editModal = true;
 
       this.index = index;
