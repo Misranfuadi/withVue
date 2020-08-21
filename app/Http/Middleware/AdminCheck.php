@@ -19,7 +19,7 @@ class AdminCheck
             return redirect('/login');
         }
         $user = Auth::user();
-        if($user->userType == 'user'){
+        if($user->role->isAdmin == '0'){
             return redirect('/login');
         }
 

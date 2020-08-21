@@ -3065,10 +3065,24 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -3185,17 +3199,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         fullName: "",
         email: "",
         password: "",
-        userType: "admin"
+        role_id: ""
       },
       addModal: false,
       isLoading: false,
       dataUsers: {},
+      dataRoles: {},
       editModal: false,
       editData: {
         fullName: "",
         email: "",
         password: "",
-        userType: ""
+        role_id: "",
+        role: {
+          roleName: ""
+        }
       },
       index: -1,
       deleteModal: false,
@@ -3236,7 +3254,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", _this.error("Password is required"));
 
               case 6:
-                if (!(_this.data.userType.trim() == "")) {
+                if (_this.data.role_id) {
                   _context.next = 8;
                   break;
                 }
@@ -3259,7 +3277,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.data.fullName = "";
                   _this.data.email = "";
                   _this.data.password = "";
-                  _this.data.userType = "admin";
+                  _this.data.role_id = "";
                   _this.addModal = false;
                   _this.isLoading = false;
                 } else if (res.status == 422) {
@@ -3285,7 +3303,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: user.id,
         fullName: user.fullName,
         email: user.email,
-        userType: user.userType
+        role_id: user.role_id,
+        created_at: user.created_at,
+        role: {
+          roleName: user.role.roleName
+        }
       };
       this.editData = obj;
       this.editModal = true;
@@ -3316,7 +3338,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", _this2.error("Email is required"));
 
               case 4:
-                if (!(_this2.editData.userType.trim() == "")) {
+                if (_this2.editData.role_id) {
                   _context2.next = 6;
                   break;
                 }
@@ -3374,16 +3396,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this3 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var res;
+      var _yield$Promise$all, _yield$Promise$all2, res, resRole;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return _this3.callApi("get", "app/dataUser");
+              return Promise.all([_this3.callApi("get", "app/dataUser"), _this3.callApi("get", "app/dataRole")]);
 
             case 2:
-              res = _context3.sent;
+              _yield$Promise$all = _context3.sent;
+              _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);
+              res = _yield$Promise$all2[0];
+              resRole = _yield$Promise$all2[1];
 
               if (res.status == 200) {
                 _this3.dataUsers = res.data;
@@ -3391,7 +3417,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this3.wrong();
               }
 
-            case 4:
+              if (res.status == 200) {
+                _this3.dataRoles = resRole.data;
+              } else {
+                _this3.wrong();
+              }
+
+            case 8:
             case "end":
               return _context3.stop();
           }
@@ -69463,7 +69495,7 @@ var render = function() {
                               {
                                 staticStyle: { "text-transform": "capitalize" }
                               },
-                              [_vm._v(_vm._s(user.userType))]
+                              [_vm._v(_vm._s(user.role.roleName))]
                             ),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(user.created_at))]),
@@ -69596,28 +69628,29 @@ var render = function() {
                 "div",
                 { staticClass: "space" },
                 [
-                  _c(
-                    "Select",
-                    {
-                      model: {
-                        value: _vm.data.userType,
-                        callback: function($$v) {
-                          _vm.$set(_vm.data, "userType", $$v)
+                  _vm.dataRoles.length
+                    ? _c(
+                        "Select",
+                        {
+                          attrs: { placeholder: "Select user type" },
+                          model: {
+                            value: _vm.data.role_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.data, "role_id", $$v)
+                            },
+                            expression: "data.role_id"
+                          }
                         },
-                        expression: "data.userType"
-                      }
-                    },
-                    [
-                      _c("Option", { attrs: { value: "admin" } }, [
-                        _vm._v("Admin")
-                      ]),
-                      _vm._v(" "),
-                      _c("Option", { attrs: { value: "editor" } }, [
-                        _vm._v("Editor")
-                      ])
-                    ],
-                    1
-                  )
+                        _vm._l(_vm.dataRoles, function(role, i) {
+                          return _c(
+                            "Option",
+                            { key: i, attrs: { value: role.id } },
+                            [_vm._v(_vm._s(role.roleName))]
+                          )
+                        }),
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -69728,28 +69761,29 @@ var render = function() {
                 "div",
                 { staticClass: "space" },
                 [
-                  _c(
-                    "Select",
-                    {
-                      model: {
-                        value: _vm.editData.userType,
-                        callback: function($$v) {
-                          _vm.$set(_vm.editData, "userType", $$v)
+                  _vm.dataRoles.length
+                    ? _c(
+                        "Select",
+                        {
+                          attrs: { placeholder: "Select user type" },
+                          model: {
+                            value: _vm.editData.role_id,
+                            callback: function($$v) {
+                              _vm.$set(_vm.editData, "role_id", $$v)
+                            },
+                            expression: "editData.role_id"
+                          }
                         },
-                        expression: "editData.userType"
-                      }
-                    },
-                    [
-                      _c("Option", { attrs: { value: "admin" } }, [
-                        _vm._v("Admin")
-                      ]),
-                      _vm._v(" "),
-                      _c("Option", { attrs: { value: "editor" } }, [
-                        _vm._v("Editor")
-                      ])
-                    ],
-                    1
-                  )
+                        _vm._l(_vm.dataRoles, function(role, i) {
+                          return _c(
+                            "Option",
+                            { key: i, attrs: { value: role.id } },
+                            [_vm._v(_vm._s(role.roleName))]
+                          )
+                        }),
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),

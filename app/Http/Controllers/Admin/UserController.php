@@ -13,7 +13,8 @@ class UserController extends Controller
     public function dataUser()
     {
         if (request()->ajax()){
-             return User::where('userType','!=','user')->orderBy('created_at','DESC')->get();
+            $user = User::orderBy('created_at','DESC')->with('role')->get();
+             return $user;
         }else{
             return abort(404);
         }
@@ -26,14 +27,14 @@ class UserController extends Controller
             'fullName'=> 'required',
             'email'=> 'bail|required|email|unique:users,email',
             'password'=> 'bail|required|min:4',
-            'userType'=> 'required',
+            'role_id'=> 'required'
         ]);
 
         $user =  User::create([
             'fullName' => $request->fullName,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'userType' => $request->userType,
+            'role_id' => $request->role_id
         ]);
 
         return $user;
@@ -45,12 +46,12 @@ class UserController extends Controller
             'fullName'=> 'required',
             'email'=> "bail|required|email|unique:users,email,$request->id",
             'password'=> 'nullable|min:4',
-            'userType'=> 'required',
+            'role_id'=> 'required'
         ]);
 
         $data = [ 'fullName' => $request->fullName,
             'email' => $request->email,
-            'userType' => $request->userType,];
+            'role_id' => $request->role_id];
 
         if($request->password){
             $data['password'] = bcrypt($request->password);

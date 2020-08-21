@@ -16,6 +16,7 @@ class CreateRolesTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('roleName');
+            $table->tinyInteger('isAdmin')->default('1');
             $table->text('permission')->nullable();
             $table->timestamps();
         });

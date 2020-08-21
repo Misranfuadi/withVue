@@ -21,7 +21,7 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'roleName'=> 'required'
+            'roleName'=> 'bail|required|unique:roles,roleName'
         ]);
 
         return Role::create([
@@ -32,7 +32,7 @@ class RoleController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'roleName'=> 'required',
+            'roleName'=> "bail|required|unique:roles,roleName,$request->id",
             'id'=> 'required'
         ]);
 
