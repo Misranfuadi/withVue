@@ -5,65 +5,58 @@
         <!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
         <div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
           <p class="_title0">
-            Tags
+            Roles
             <Button @click="addModal=true">
-              <Icon type="md-add" />Add Tag
+              <Icon type="md-add" />Add Role
             </Button>
           </p>
           <div class="_overflow _table_div">
-            <table class="_table">
+            <table class="_table" v-if="dataRoles.length">
               <!-- TABLE TITLE -->
               <tr>
                 <th>No</th>
-                <th>Nama Tag</th>
+                <th>Nama Role</th>
                 <th>Created at</th>
                 <th>Action</th>
               </tr>
 
               <!-- ITEMS -->
-              <template v-if="dataTags.length">
-                <tr v-for="(tag, i) in dataTags" :key="i">
-                  <td>{{i+1}}</td>
-                  <td class="_table_name">{{ tag.tagName }}</td>
-                  <td>{{ tag.created_at }}</td>
-                  <td>
-                    <Button type="info" size="small" @click="showEditModal(tag, i)">Edit</Button>
-                    <Button
-                      type="error"
-                      size="small"
-                      @click="showDeleteModal(tag, i)"
-                      :loading="tag.isDeleting"
-                    >{{ tag.isDeleting?'Deleting...':'Delete' }}</Button>
-                  </td>
-                </tr>
-              </template>
+              <tr v-for="(role, i) in dataRoles" :key="i">
+                <td>{{i+1}}</td>
+                <td class="_table_name">{{ role.roleName }}</td>
+                <td>{{ role.created_at }}</td>
+                <td>
+                  <Button type="info" size="small" @click="showEditModal(role, i)">Edit</Button>
+                  <Button type="error" size="small" @click="showDeleteModal(role, i)">Delete</Button>
+                </td>
+              </tr>
             </table>
           </div>
         </div>
 
         <!--~~~~~~~ Add Modal ~~~~~~~~~-->
-        <Modal title="Add tag" v-model="addModal" :closable="false" :mask-closable="false">
-          <Input v-model="data.tagName" placeholder="Enter name tag" />
+        <Modal title="Add role" v-model="addModal" :closable="false" :mask-closable="false">
+          <Input v-model="data.roleName" placeholder="Enter name role" />
           <div slot="footer">
             <Button type="default" @click="addModal=false">Close</Button>
             <Button
               type="primary"
               @click="addData"
               :loading="isLoading"
-            >{{ isLoading?'Adding...':'Add tag' }}</Button>
+            >{{ isLoading?'Adding...':'Add role' }}</Button>
           </div>
         </Modal>
 
         <!--~~~~~~~ Edit Modal ~~~~~~~~~-->
-        <Modal title="Edit tag" v-model="editModal" :closable="false" :mask-closable="false">
-          <Input v-model="editData.tagName" placeholder="Edit name tag" />
+        <Modal title="Edit role" v-model="editModal" :closable="false" :mask-closable="false">
+          <Input v-model="editData.roleName" placeholder="Edit name role" />
           <div slot="footer">
             <Button type="default" @click="editModal=false">Close</Button>
             <Button
               type="primary"
               @click="updateData"
               :loading="isLoading"
-            >{{ isLoading?'Editing...':'Edit tag' }}</Button>
+            >{{ isLoading?'Editing...':'Edit role' }}</Button>
           </div>
         </Modal>
 
@@ -80,15 +73,15 @@ export default {
   data() {
     return {
       data: {
-        tagName: "",
+        roleName: "",
       },
       addModal: false,
       isLoading: false,
-      dataTags: {},
+      dataRoles: {},
 
       editModal: false,
       editData: {
-        tagName: "",
+        roleName: "",
       },
       index: -1,
       deleteModal: false,
@@ -97,15 +90,15 @@ export default {
   },
   methods: {
     async addData() {
-      if (this.data.tagName.trim() == "") {
-        return this.error("Tag name is required");
+      if (this.data.roleName.trim() == "") {
+        return this.error("Role name is required");
       }
       this.isLoading = true;
-      const res = await this.callApi("post", "app/createTag", this.data);
+      const res = await this.callApi("post", "app/createRole", this.data);
       if (res.status == 201) {
-        this.success("Tag has been added successfully");
-        this.dataTags.unshift(res.data);
-        this.data.tagName = "";
+        this.success("Role has been added successfully");
+        this.dataRoles.unshift(res.data);
+        this.data.roleName = "";
         this.addModal = false;
         this.isLoading = false;
       } else if (res.status == 422) {
@@ -118,10 +111,10 @@ export default {
       this.isLoading = false;
     },
 
-    showEditModal(tag, index) {
+    showEditModal(role, index) {
       let obj = {
-        id: tag.id,
-        tagName: tag.tagName,
+        id: role.id,
+        roleName: role.roleName,
       };
       this.editData = obj;
       this.editModal = true;
@@ -130,14 +123,14 @@ export default {
     },
 
     async updateData() {
-      if (this.editData.tagName.trim() == "") {
-        return this.error("Tag name is required");
+      if (this.editData.roleName.trim() == "") {
+        return this.error("Role name is required");
       }
       this.isLoading = true;
-      const res = await this.callApi("post", "app/updateTag", this.editData);
+      const res = await this.callApi("post", "app/updateRole", this.editData);
       if (res.status == 200) {
-        this.success("Tag has been edited successfully");
-        this.dataTags[this.index].tagName = this.editData.tagName;
+        this.success("Role has been edited successfully");
+        this.dataRoles[this.index].roleName = this.editData.roleName;
         this.editModal = false;
         this.isLoading = false;
       } else if (res.status == 422) {
@@ -150,12 +143,12 @@ export default {
       this.isLoading = false;
     },
 
-    showDeleteModal(tag, i) {
+    showDeleteModal(role, i) {
       const deleteObj = {
-        title: "Tag",
+        title: "Role",
         deleteModal: true,
-        url: "app/deleteTag",
-        data: tag,
+        url: "app/deleteRole",
+        data: role,
         index: i,
         isDeleted: false,
       };
@@ -164,9 +157,9 @@ export default {
   },
 
   async created() {
-    const res = await this.callApi("get", "app/dataTag");
+    const res = await this.callApi("get", "app/dataRole");
     if (res.status == 200) {
-      this.dataTags = res.data;
+      this.dataRoles = res.data;
     } else {
       this.wrong();
     }
@@ -181,7 +174,7 @@ export default {
   watch: {
     getDeleteObj(obj) {
       if (obj.isDeleted) {
-        this.dataTags.splice(obj.index, 1);
+        this.dataRoles.splice(obj.index, 1);
       }
     },
   },

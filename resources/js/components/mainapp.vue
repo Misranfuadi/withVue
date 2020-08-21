@@ -31,6 +31,9 @@
                 <router-link to="user">
                   <Icon type="ios-people" />User Management
                 </router-link>
+                <router-link to="role">
+                  <Icon type="md-key" />Role Management
+                </router-link>
                 <a href="/logout">
                   <Icon type="md-log-out" />Logout
                 </a>

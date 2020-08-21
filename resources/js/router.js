@@ -7,6 +7,7 @@ import login from './components/login'
 import home from './components/home'
 import tags from './components/admin/pages/tags'
 import category from './components/admin/pages/category'
+import role from './components/admin/pages/role'
 import user from './components/admin/pages/user'
 
 
@@ -34,6 +35,10 @@ const routes = [
     {
         path: '/user',
         component: user
+    },
+    {
+        path: '/role',
+        component: role
     },
 
 

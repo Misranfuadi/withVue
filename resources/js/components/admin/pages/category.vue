@@ -171,18 +171,13 @@ export default {
         this.addModal = false;
         this.isLoading = false;
       } else if (res.status == 422) {
-        if (res.data.errors.name) {
-          this.error(res.data.errors.name[0]);
-          this.isLoading = false;
-        }
-        if (res.data.errors.iconImage) {
-          this.error(res.data.errors.iconImage[0]);
-          this.isLoading = false;
+        for (let i in res.data.errors) {
+          this.error(res.data.errors[i][0]);
         }
       } else {
         this.wrong();
-        this.isLoading = false;
       }
+      this.isLoading = false;
     },
 
     showEditModal(category, index) {
@@ -215,18 +210,13 @@ export default {
         this.editModal = false;
         this.isLoading = false;
       } else if (res.status == 422) {
-        if (res.data.errors.name) {
-          this.error(res.data.errors.name[0]);
-          this.isLoading = false;
-        }
-        if (res.data.errors.iconImage) {
-          this.error(res.data.errors.iconImage[0]);
-          this.isLoading = false;
+        for (let i in res.data.errors) {
+          this.error(res.data.errors[i][0]);
         }
       } else {
         this.wrong();
-        this.isLoading = false;
       }
+      this.isLoading = false;
     },
 
     showDeleteModal(category, i) {

@@ -20,13 +20,13 @@ Route::post('app/login','Admin\AuthController@login');
 Route::group(['prefix' => 'app','middleware'=> 'admin'], function () {
 
 
-    //---Tag Controller
+    //---Tag Route
     Route::get('/dataTag','Admin\TagController@dataTag');
     Route::post('/createTag','Admin\TagController@store');
     Route::post('/updateTag','Admin\TagController@update');
     Route::delete('/deleteTag','Admin\TagController@destroy');
 
-    //---Category Controller
+    //---Category Route
     Route::get('/dataCategory','Admin\CategoryController@dataCategory');
     Route::post('/createCategory','Admin\CategoryController@store');
     Route::post('/updateCategory','Admin\CategoryController@update');
@@ -34,11 +34,17 @@ Route::group(['prefix' => 'app','middleware'=> 'admin'], function () {
     Route::post('/uploadImageCategory','Admin\CategoryController@uploadImage');
     Route::delete('/deleteImageCategory','Admin\CategoryController@deleteImage');
 
-    //--User Controller
+    //--User Route
     Route::get('/dataUser','Admin\UserController@dataUser');
     Route::post('/createUser','Admin\UserController@store');
     Route::post('/updateUser','Admin\UserController@update');
     Route::delete('/deleteUser','Admin\UserController@destroy');
+
+    //--Role Route
+    Route::get('/dataRole','Admin\RoleController@dataRole');
+    Route::post('/createRole','Admin\RoleController@store');
+    Route::post('/updateRole','Admin\RoleController@update');
+    Route::delete('/deleteRole','Admin\RoleController@destroy');
 });
 
 

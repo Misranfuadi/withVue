@@ -162,11 +162,10 @@ export default {
         for (let i in res.data.errors) {
           this.error(res.data.errors[i][0]);
         }
-        this.isLoading = false;
       } else {
         this.wrong();
-        this.isLoading = false;
       }
+      this.isLoading = false;
     },
 
     showEditModal(user, index) {
