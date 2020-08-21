@@ -28,6 +28,11 @@ Route::delete('app/deleteCategory','Admin\CategoryController@destroy' );
 Route::post('app/uploadImageCategory','Admin\CategoryController@uploadImage' );
 Route::delete('app/deleteImageCategory','Admin\CategoryController@deleteImage' );
 
+//--User Controller
+Route::get('app/dataUser','Admin\UserController@dataUser' );
+Route::post('app/createUser','Admin\UserController@store' );
+Route::post('app/updateUser','Admin\UserController@update' );
+Route::delete('app/deleteUser','Admin\UserController@destroy' );
 
 Route::get('/', function () {
     return view('index');

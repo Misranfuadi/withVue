@@ -26,7 +26,10 @@
                   <Icon type="ios-paper" />Tags
                 </router-link>
                 <router-link to="category">
-                  <Icon type="ios-paper" />Category
+                  <Icon type="md-cog" />Category
+                </router-link>
+                <router-link to="user">
+                  <Icon type="ios-people" />User Management
                 </router-link>
               </li>
             </ul>

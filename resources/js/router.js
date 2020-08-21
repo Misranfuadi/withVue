@@ -6,6 +6,7 @@ Vue.use(Router)
 import home from './components/home'
 import tags from './components/admin/pages/tags'
 import category from './components/admin/pages/category'
+import user from './components/admin/pages/user'
 
 
 
@@ -24,6 +25,10 @@ const routes = [
     {
         path: '/category',
         component: category
+    },
+    {
+        path: '/user',
+        component: user
     },
 
 
