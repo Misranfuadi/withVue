@@ -9,6 +9,7 @@ import tags from './components/admin/pages/tags'
 import category from './components/admin/pages/category'
 import role from './components/admin/pages/role'
 import user from './components/admin/pages/user'
+import assign from './components/admin/pages/assign'
 
 
 
@@ -20,25 +21,36 @@ const routes = [
     },
     {
         path: '/',
-        component: home
+        component: home,
+        name: 'home'
     },
 
     {
         path: '/tags',
-        component: tags
+        component: tags,
+        name: 'tags'
     },
 
     {
         path: '/category',
-        component: category
+        component: category,
+        name: 'category'
     },
     {
         path: '/user',
-        component: user
+        component: user,
+        name: 'user'
+
     },
     {
         path: '/role',
-        component: role
+        component: role,
+        name: 'role'
+    },
+    {
+        path: '/assign',
+        component: assign,
+        name: 'assign'
     },
 
 

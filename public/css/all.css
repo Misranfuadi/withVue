@@ -1317,7 +1317,6 @@ li.activeclass {
     font-weight: 600;
     color: #383737;
     max-width: 415px;
-    display: -webkit-box;
     max-height: 3.2rem;
     -webkit-box-orient: vertical;
     overflow: hidden;

@@ -11,7 +11,7 @@
             </Button>
           </p>
           <div class="_overflow _table_div">
-            <table class="_table">
+            <table class="_table" v-if="dataCategories.length">
               <!-- TABLE TITLE -->
               <tr>
                 <th>No</th>
@@ -22,23 +22,22 @@
               </tr>
 
               <!-- ITEMS -->
-              <template v-if="dataCategories.length">
-                <tr v-for="(category, i) in dataCategories" :key="i">
-                  <td>{{i+1}}</td>
-                  <td class="table_image">
-                    <img
-                      v-if="category.iconImage != ''"
-                      :src="`/uploads/category/${category.iconImage}`"
-                    />
-                  </td>
-                  <td class="_table_name">{{ category.name }}</td>
-                  <td>{{ category.created_at }}</td>
-                  <td>
-                    <Button type="info" size="small" @click="showEditModal(category, i)">Edit</Button>
-                    <Button type="error" size="small" @click="showDeleteModal(category, i)">Delete</Button>
-                  </td>
-                </tr>
-              </template>
+
+              <tr v-for="(category, i) in dataCategories" :key="i">
+                <td>{{i+1}}</td>
+                <td class="table_image">
+                  <img
+                    v-if="category.iconImage != ''"
+                    :src="`/uploads/category/${category.iconImage}`"
+                  />
+                </td>
+                <td class="_table_name">{{ category.name }}</td>
+                <td>{{ category.created_at }}</td>
+                <td>
+                  <Button type="info" size="small" @click="showEditModal(category, i)">Edit</Button>
+                  <Button type="error" size="small" @click="showDeleteModal(category, i)">Delete</Button>
+                </td>
+              </tr>
             </table>
           </div>
         </div>

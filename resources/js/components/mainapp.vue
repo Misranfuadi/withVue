@@ -17,23 +17,16 @@
 
           <!--~~~ MENU LIST ~~~~~~-->
           <div class="_1side_menu_list">
-            <ul class="_1side_menu_list_ul">
+            <ul class="_1side_menu_list_ul" v-if="permission.length">
+              <div v-for="(menu, i) in permission" :key="i">
+                <li v-if="menu.read">
+                  <router-link :to="menu.name">
+                    <Icon :type="menu.icon" />
+                    {{ menu.sourceName }}
+                  </router-link>
+                </li>
+              </div>
               <li>
-                <router-link to="/">
-                  <Icon type="ios-speedometer" />Dashboard
-                </router-link>
-                <router-link to="tags">
-                  <Icon type="ios-paper" />Tags
-                </router-link>
-                <router-link to="category">
-                  <Icon type="md-cog" />Category
-                </router-link>
-                <router-link to="user">
-                  <Icon type="ios-people" />User Management
-                </router-link>
-                <router-link to="role">
-                  <Icon type="md-key" />Role Management
-                </router-link>
                 <a href="/logout">
                   <Icon type="md-log-out" />Logout
                 </a>
@@ -65,7 +58,7 @@
 
 <script>
 export default {
-  props: ["user"],
+  props: ["user", "permission"],
   data() {
     return {
       isLoggedin: false,

@@ -45,6 +45,8 @@ Route::group(['prefix' => 'app','middleware'=> 'admin'], function () {
     Route::post('/createRole','Admin\RoleController@store');
     Route::post('/updateRole','Admin\RoleController@update');
     Route::delete('/deleteRole','Admin\RoleController@destroy');
+    Route::post('/updateAssign','Admin\RoleController@assignRole');
+
 });
 
 

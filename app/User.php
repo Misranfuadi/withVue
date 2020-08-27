@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Role');
     }
+
+    //  public function roleNotuser()
+    // {
+    //     return $this->belongsTo('App\Role')->where('isAdmin','!=', 0);
+    // }
 }

@@ -11,7 +11,7 @@
             </Button>
           </p>
           <div class="_overflow _table_div">
-            <table class="_table">
+            <table class="_table" v-if="dataUsers.length">
               <!-- TABLE TITLE -->
               <tr>
                 <th>No</th>
@@ -23,24 +23,23 @@
               </tr>
 
               <!-- ITEMS -->
-              <template v-if="dataUsers.length">
-                <tr v-for="(user, i) in dataUsers" :key="i">
-                  <td>{{i+1}}</td>
-                  <td class="_table_name">{{ user.fullName }}</td>
-                  <td>{{ user.email }}</td>
-                  <td style="text-transform: capitalize">{{ user.role.roleName }}</td>
-                  <td>{{ user.created_at }}</td>
-                  <td>
-                    <Button type="info" size="small" @click="showEditModal(user, i)">Edit</Button>
-                    <Button
-                      type="error"
-                      size="small"
-                      @click="showDeleteModal(user, i)"
-                      :loading="user.isDeleting"
-                    >{{ user.isDeleting?'Deleting...':'Delete' }}</Button>
-                  </td>
-                </tr>
-              </template>
+
+              <tr v-for="(user, i) in dataUsers" :key="i">
+                <td>{{i+1}}</td>
+                <td class="_table_name">{{ user.fullName }}</td>
+                <td>{{ user.email }}</td>
+                <td style="text-transform: capitalize">{{ user.role.roleName }}</td>
+                <td>{{ user.created_at }}</td>
+                <td>
+                  <Button type="info" size="small" @click="showEditModal(user, i)">Edit</Button>
+                  <Button
+                    type="error"
+                    size="small"
+                    @click="showDeleteModal(user, i)"
+                    :loading="user.isDeleting"
+                  >{{ user.isDeleting?'Deleting...':'Delete' }}</Button>
+                </td>
+              </tr>
             </table>
           </div>
         </div>

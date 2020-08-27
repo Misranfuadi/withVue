@@ -11,7 +11,7 @@
             </Button>
           </p>
           <div class="_overflow _table_div">
-            <table class="_table">
+            <table class="_table" v-if="dataTags.length">
               <!-- TABLE TITLE -->
               <tr>
                 <th>No</th>
@@ -21,22 +21,15 @@
               </tr>
 
               <!-- ITEMS -->
-              <template v-if="dataTags.length">
-                <tr v-for="(tag, i) in dataTags" :key="i">
-                  <td>{{i+1}}</td>
-                  <td class="_table_name">{{ tag.tagName }}</td>
-                  <td>{{ tag.created_at }}</td>
-                  <td>
-                    <Button type="info" size="small" @click="showEditModal(tag, i)">Edit</Button>
-                    <Button
-                      type="error"
-                      size="small"
-                      @click="showDeleteModal(tag, i)"
-                      :loading="tag.isDeleting"
-                    >{{ tag.isDeleting?'Deleting...':'Delete' }}</Button>
-                  </td>
-                </tr>
-              </template>
+              <tr v-for="(tag, i) in dataTags" :key="i">
+                <td>{{i+1}}</td>
+                <td class="_table_name">{{ tag.tagName }}</td>
+                <td>{{ tag.created_at }}</td>
+                <td>
+                  <Button type="info" size="small" @click="showEditModal(tag, i)">Edit</Button>
+                  <Button type="error" size="small" @click="showDeleteModal(tag, i)">Delete</Button>
+                </td>
+              </tr>
             </table>
           </div>
         </div>

@@ -11,7 +11,7 @@ class RoleController extends Controller
     public function dataRole()
     {
         if (request()->ajax()){
-            return Role::orderBy('created_at','DESC')->get();
+            return Role::orderBy('created_at','DESC')->where('isAdmin','!=',0)->get();
         }else{
             return abort(404);
         }
@@ -48,5 +48,16 @@ class RoleController extends Controller
         ]);
 
         return Role::where('id', $request->id)->delete();
+    }
+
+    public function assignRole(Request $request){
+        $this->validate($request, [
+            'permission' => 'required',
+            'id'    =>'required'
+        ]);
+
+        return Role::where('id',$request->id)->update([
+            'permission' => $request->permission
+        ]);
     }
 }
