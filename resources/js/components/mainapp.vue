@@ -67,6 +67,7 @@ export default {
 
   created() {
     this.$store.commit("updateUser", this.user);
+    this.$store.commit("userPermission", this.permission);
   },
 };
 </script>

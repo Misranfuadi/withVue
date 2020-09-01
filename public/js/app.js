@@ -3101,6 +3101,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3895,6 +3905,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.$store.commit("updateUser", this.user);
+    this.$store.commit("userPermission", this.permission);
   }
 });
 
@@ -68787,6 +68798,9 @@ var render = function() {
                         "td",
                         [
                           _c("Checkbox", {
+                            attrs: {
+                              disabled: data.write || data.update || data.delete
+                            },
                             model: {
                               value: data.read,
                               callback: function($$v) {
@@ -68803,6 +68817,11 @@ var render = function() {
                         "td",
                         [
                           _c("Checkbox", {
+                            on: {
+                              "on-change": function($event) {
+                                data.read = true
+                              }
+                            },
                             model: {
                               value: data.write,
                               callback: function($$v) {
@@ -68819,6 +68838,11 @@ var render = function() {
                         "td",
                         [
                           _c("Checkbox", {
+                            on: {
+                              "on-change": function($event) {
+                                data.read = true
+                              }
+                            },
                             model: {
                               value: data.update,
                               callback: function($$v) {
@@ -68835,6 +68859,11 @@ var render = function() {
                         "td",
                         [
                           _c("Checkbox", {
+                            on: {
+                              "on-change": function($event) {
+                                data.read = true
+                              }
+                            },
                             model: {
                               value: data.delete,
                               callback: function($$v) {
@@ -69605,21 +69634,23 @@ var render = function() {
                 { staticClass: "_title0" },
                 [
                   _vm._v("\n          Tags\n          "),
-                  _c(
-                    "Button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.addModal = true
-                        }
-                      }
-                    },
-                    [
-                      _c("Icon", { attrs: { type: "md-add" } }),
-                      _vm._v("Add Tag\n          ")
-                    ],
-                    1
-                  )
+                  _vm.isWrite
+                    ? _c(
+                        "Button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.addModal = true
+                            }
+                          }
+                        },
+                        [
+                          _c("Icon", { attrs: { type: "md-add" } }),
+                          _vm._v("Add Tag\n          ")
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -69630,7 +69661,17 @@ var render = function() {
                       "table",
                       { staticClass: "_table" },
                       [
-                        _vm._m(0),
+                        _c("tr", [
+                          _c("th", [_vm._v("No")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Nama Tag")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Created at")]),
+                          _vm._v(" "),
+                          _vm.isUpdate || _vm.isDelete
+                            ? _c("th", [_vm._v("Action")])
+                            : _vm._e()
+                        ]),
                         _vm._v(" "),
                         _vm._l(_vm.dataTags, function(tag, i) {
                           return _c("tr", { key: i }, [
@@ -69642,37 +69683,52 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(tag.created_at))]),
                             _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c(
-                                  "Button",
-                                  {
-                                    attrs: { type: "info", size: "small" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showEditModal(tag, i)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Edit")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "Button",
-                                  {
-                                    attrs: { type: "error", size: "small" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showDeleteModal(tag, i)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Delete")]
+                            _vm.isUpdate || _vm.isDelete
+                              ? _c(
+                                  "td",
+                                  [
+                                    _vm.isUpdate
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "info",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showEditModal(tag, i)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Edit")]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.isDelete
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "error",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showDeleteModal(
+                                                  tag,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Delete")]
+                                        )
+                                      : _vm._e()
+                                  ],
+                                  1
                                 )
-                              ],
-                              1
-                            )
+                              : _vm._e()
                           ])
                         })
                       ],
@@ -69810,22 +69866,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_vm._v("No")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Nama Tag")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Created at")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Action")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -87545,11 +87586,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -87616,8 +87671,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: 'Oops!',
         desc: desc ? desc : 'Somthing went wrong! Please try again.'
       });
+    },
+    checkUserPermission: function checkUserPermission(key) {
+      if (!this.userPermission) return true;
+      var isPermitted = false;
+
+      var _iterator = _createForOfIteratorHelper(this.userPermission),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var d = _step.value;
+
+          if (this.$route.name == d.name) {
+            if (d[key]) {
+              isPermitted = true;
+              break;
+            } else {
+              break;
+            }
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return isPermitted;
     }
-  }
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    'userPermission': 'getUserPermission'
+  })), {}, {
+    isRead: function isRead() {
+      return this.checkUserPermission('read');
+    },
+    isWrite: function isWrite() {
+      return this.checkUserPermission('write');
+    },
+    isUpdate: function isUpdate() {
+      return this.checkUserPermission('update');
+    },
+    isDelete: function isDelete() {
+      return this.checkUserPermission('delete');
+    }
+  })
 });
 
 /***/ }),
@@ -88339,6 +88438,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   getters: {
     getDeleteObj: function getDeleteObj(state) {
       return state.deleteObj;
+    },
+    getUserPermission: function getUserPermission(state) {
+      return state.permission;
     }
   },
   mutations: {
@@ -88355,6 +88457,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     updateUser: function updateUser(state, data) {
       state.user = data;
+    },
+    userPermission: function userPermission(state, data) {
+      state.permission = data;
     }
   }
 }));

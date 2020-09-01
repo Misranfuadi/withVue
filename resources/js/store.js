@@ -17,6 +17,9 @@ export default new Vuex.Store({
     getters: {
         getDeleteObj(state) {
             return state.deleteObj
+        },
+        getUserPermission(state) {
+            return state.permission
         }
     },
 
@@ -34,6 +37,9 @@ export default new Vuex.Store({
         },
         updateUser(state, data) {
             state.user = data
+        },
+        userPermission(state, data) {
+            state.permission = data
         }
 
     }

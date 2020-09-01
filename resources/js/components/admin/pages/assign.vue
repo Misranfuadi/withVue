@@ -34,16 +34,16 @@
                 <td>{{i+1}}</td>
                 <td class="_table_name">{{ data.sourceName }}</td>
                 <td>
-                  <Checkbox v-model="data.read"></Checkbox>
+                  <Checkbox v-model="data.read" :disabled="data.write||data.update||data.delete"></Checkbox>
                 </td>
                 <td>
-                  <Checkbox v-model="data.write"></Checkbox>
+                  <Checkbox v-model="data.write" @on-change="data.read= true"></Checkbox>
                 </td>
                 <td>
-                  <Checkbox v-model="data.update"></Checkbox>
+                  <Checkbox v-model="data.update" @on-change="data.read= true"></Checkbox>
                 </td>
                 <td>
-                  <Checkbox v-model="data.delete"></Checkbox>
+                  <Checkbox v-model="data.delete" @on-change="data.read= true"></Checkbox>
                 </td>
               </tr>
             </table>

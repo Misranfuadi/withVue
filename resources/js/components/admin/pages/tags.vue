@@ -6,7 +6,7 @@
         <div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
           <p class="_title0">
             Tags
-            <Button @click="addModal=true">
+            <Button @click="addModal=true" v-if="isWrite">
               <Icon type="md-add" />Add Tag
             </Button>
           </p>
@@ -17,7 +17,7 @@
                 <th>No</th>
                 <th>Nama Tag</th>
                 <th>Created at</th>
-                <th>Action</th>
+                <th v-if="isUpdate||isDelete">Action</th>
               </tr>
 
               <!-- ITEMS -->
@@ -25,9 +25,19 @@
                 <td>{{i+1}}</td>
                 <td class="_table_name">{{ tag.tagName }}</td>
                 <td>{{ tag.created_at }}</td>
-                <td>
-                  <Button type="info" size="small" @click="showEditModal(tag, i)">Edit</Button>
-                  <Button type="error" size="small" @click="showDeleteModal(tag, i)">Delete</Button>
+                <td v-if="isUpdate||isDelete">
+                  <Button
+                    type="info"
+                    size="small"
+                    v-if="isUpdate"
+                    @click="showEditModal(tag, i)"
+                  >Edit</Button>
+                  <Button
+                    type="error"
+                    size="small"
+                    v-if="isDelete"
+                    @click="showDeleteModal(tag, i)"
+                  >Delete</Button>
                 </td>
               </tr>
             </table>
