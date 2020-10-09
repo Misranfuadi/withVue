@@ -3700,6 +3700,23 @@ i.cross_icon {
     margin: 0 2px;
 }
 
+.blog_editor {
+    border: 1px solid #dcdee2;
+    border-radius: 4px;
+    color: #515a6e;
+    background-color: #ffffff;
+    background-image: none;
+    z-index: 0;
+}
+
+.blog_editor:hover {
+    border: 1px solid #57a3f3;
+}
+
+.codex-editor {
+    z-index: 0;
+}
+
 /*!
  * Bootstrap v4.1.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors

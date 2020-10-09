@@ -16,7 +16,7 @@
               <Option :value="role.id" v-for="(role,i) in dataRoles" :key="i">{{ role.roleName }}</Option>
             </Select>
           </p>
-          <div class="_overflow _table_div">
+          <div class="_overflow _table_div" v-if="dataAssign.length">
             <table class="_table">
               <!-- TABLE TITLE -->
               <tr>

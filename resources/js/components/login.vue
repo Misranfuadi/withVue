@@ -67,7 +67,7 @@ export default {
         window.location = "/";
       } else {
         if (res.status == 401) {
-          this.warning(res.data.msg);
+          this.warng(res.data.msg);
         } else if (res.status == 422) {
           for (let i in res.data.errors) {
             this.error(res.data.errors[i][0]);

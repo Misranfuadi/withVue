@@ -47,9 +47,11 @@ Route::group(['prefix' => 'app','middleware'=> 'admin'], function () {
     Route::delete('/deleteRole','Admin\RoleController@destroy');
     Route::post('/updateAssign','Admin\RoleController@assignRole');
 
+    //--Blogs
+    Route::post('/createBlog','Admin\BlogController@createBlog');
 });
 
-
+Route::post('/blog','Admin\BlogController@uploadImage');
 
 Route::get('/logout','Admin\AuthController@logout');
 Route::get('/','Admin\AuthController@index');

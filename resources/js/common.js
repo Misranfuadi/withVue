@@ -32,7 +32,7 @@ export default {
                 desc: desc ? desc : 'Here is the notification description.'
             });
         },
-        warning(desc) {
+        warng(desc) {
             this.$Notice.warning({
                 title: 'Oops!',
                 desc: desc ? desc : 'Here is the notification description.'

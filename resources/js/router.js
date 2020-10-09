@@ -10,6 +10,7 @@ import category from './components/admin/pages/category'
 import role from './components/admin/pages/role'
 import user from './components/admin/pages/user'
 import assign from './components/admin/pages/assign'
+import blog from './components/admin/pages/blog'
 
 
 
@@ -51,6 +52,11 @@ const routes = [
         path: '/assign',
         component: assign,
         name: 'assign'
+    },
+    {
+        path: '/blog',
+        component: blog,
+        name: 'blog'
     },
 
 
