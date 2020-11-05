@@ -3703,6 +3703,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3841,6 +3851,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         isDeleted: false
       };
       this.$store.commit("setDeleteModalObj", deleteObj);
+    },
+    closeModal: function closeModal() {
+      this.data.tagName = "";
+      this.addModal = false;
     }
   },
   created: function created() {
@@ -71710,11 +71724,7 @@ var render = function() {
                     "Button",
                     {
                       attrs: { type: "default" },
-                      on: {
-                        click: function($event) {
-                          _vm.addModal = false
-                        }
-                      }
+                      on: { click: _vm.closeModal }
                     },
                     [_vm._v("Close")]
                   ),

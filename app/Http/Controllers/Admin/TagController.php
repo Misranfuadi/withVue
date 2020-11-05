@@ -11,7 +11,7 @@ class TagController extends Controller
     public function dataTag()
     {
         if (request()->ajax()){
-            return Tag::orderBy('created_at','DESC')->get();
+            return Tag::select('id','tagName','created_at')->orderBy('created_at','DESC')->get();
         }else{
             return abort(404);
         }

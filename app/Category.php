@@ -10,4 +10,9 @@ class Category extends Model
     protected $fillable = [
         'name','iconImage'
     ];
+
+    protected $casts = [
+    'created_at' => 'datetime:d-F-Y',
+    ];
+
 }

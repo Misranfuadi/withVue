@@ -3,10 +3,12 @@
     <div class="content">
       <div class="container-fluid">
         <!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
-        <div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
+        <div
+          class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20"
+        >
           <p class="_title0">
             Tags
-            <Button @click="addModal=true" v-if="isWrite">
+            <Button @click="addModal = true" v-if="isWrite">
               <Icon type="md-add" />Add Tag
             </Button>
           </p>
@@ -17,27 +19,29 @@
                 <th>No</th>
                 <th>Nama Tag</th>
                 <th>Created at</th>
-                <th v-if="isUpdate||isDelete">Action</th>
+                <th v-if="isUpdate || isDelete">Action</th>
               </tr>
 
               <!-- ITEMS -->
               <tr v-for="(tag, i) in dataTags" :key="i">
-                <td>{{i+1}}</td>
+                <td>{{ i + 1 }}</td>
                 <td class="_table_name">{{ tag.tagName }}</td>
                 <td>{{ tag.created_at }}</td>
-                <td v-if="isUpdate||isDelete">
+                <td v-if="isUpdate || isDelete">
                   <Button
                     type="info"
                     size="small"
                     v-if="isUpdate"
                     @click="showEditModal(tag, i)"
-                  >Edit</Button>
+                    >Edit</Button
+                  >
                   <Button
                     type="error"
                     size="small"
                     v-if="isDelete"
                     @click="showDeleteModal(tag, i)"
-                  >Delete</Button>
+                    >Delete</Button
+                  >
                 </td>
               </tr>
             </table>
@@ -45,28 +49,34 @@
         </div>
 
         <!--~~~~~~~ Add Modal ~~~~~~~~~-->
-        <Modal title="Add tag" v-model="addModal" :closable="false" :mask-closable="false">
+        <Modal
+          title="Add tag"
+          v-model="addModal"
+          :closable="false"
+          :mask-closable="false"
+        >
           <Input v-model="data.tagName" placeholder="Enter name tag" />
           <div slot="footer">
-            <Button type="default" @click="addModal=false">Close</Button>
-            <Button
-              type="primary"
-              @click="addData"
-              :loading="isLoading"
-            >{{ isLoading?'Adding...':'Add tag' }}</Button>
+            <Button type="default" @click="closeModal">Close</Button>
+            <Button type="primary" @click="addData" :loading="isLoading">{{
+              isLoading ? "Adding..." : "Add tag"
+            }}</Button>
           </div>
         </Modal>
 
         <!--~~~~~~~ Edit Modal ~~~~~~~~~-->
-        <Modal title="Edit tag" v-model="editModal" :closable="false" :mask-closable="false">
+        <Modal
+          title="Edit tag"
+          v-model="editModal"
+          :closable="false"
+          :mask-closable="false"
+        >
           <Input v-model="editData.tagName" placeholder="Edit name tag" />
           <div slot="footer">
-            <Button type="default" @click="editModal=false">Close</Button>
-            <Button
-              type="primary"
-              @click="updateData"
-              :loading="isLoading"
-            >{{ isLoading?'Editing...':'Edit tag' }}</Button>
+            <Button type="default" @click="editModal = false">Close</Button>
+            <Button type="primary" @click="updateData" :loading="isLoading">{{
+              isLoading ? "Editing..." : "Edit tag"
+            }}</Button>
           </div>
         </Modal>
 
@@ -163,6 +173,11 @@ export default {
         isDeleted: false,
       };
       this.$store.commit("setDeleteModalObj", deleteObj);
+    },
+
+    closeModal() {
+      this.data.tagName = "";
+      this.addModal = false;
     },
   },
 
