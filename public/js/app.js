@@ -3004,6 +3004,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3091,7 +3123,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     showEditModal: function showEditModal(category, index) {
       var obj = {
         id: category.id,
-        name: category.name
+        name: category.name,
+        iconImage: category.iconImage
       };
       this.editData = obj;
       this.editModal = true;

@@ -3,10 +3,12 @@
     <div class="content">
       <div class="container-fluid">
         <!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
-        <div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
+        <div
+          class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20"
+        >
           <p class="_title0">
             Categories
-            <Button @click="addModal=true">
+            <Button @click="addModal = true">
               <Icon type="md-add" />Add Category
             </Button>
           </p>
@@ -24,7 +26,7 @@
               <!-- ITEMS -->
 
               <tr v-for="(category, i) in dataCategories" :key="i">
-                <td>{{i+1}}</td>
+                <td>{{ i + 1 }}</td>
                 <td class="table_image">
                   <img
                     v-if="category.iconImage != ''"
@@ -34,8 +36,18 @@
                 <td class="_table_name">{{ category.name }}</td>
                 <td>{{ category.created_at }}</td>
                 <td>
-                  <Button type="info" size="small" @click="showEditModal(category, i)">Edit</Button>
-                  <Button type="error" size="small" @click="showDeleteModal(category, i)">Delete</Button>
+                  <Button
+                    type="info"
+                    size="small"
+                    @click="showEditModal(category, i)"
+                    >Edit</Button
+                  >
+                  <Button
+                    type="error"
+                    size="small"
+                    @click="showDeleteModal(category, i)"
+                    >Delete</Button
+                  >
                 </td>
               </tr>
             </table>
@@ -43,24 +55,36 @@
         </div>
 
         <!-- Add Modal -->
-        <Modal title="Add category" v-model="addModal" :closable="false" :mask-closable="false">
+        <Modal
+          title="Add category"
+          v-model="addModal"
+          :closable="false"
+          :mask-closable="false"
+        >
           <Input v-model="data.name" placeholder="Enter name category" />
           <div class="space"></div>
           <Upload
-            v-if="data.iconImage== ''"
+            v-if="data.iconImage == ''"
             ref="uploads"
             type="drag"
-            :headers="{'x-csrf-token': token, 'X-Requested-with' :'XMLHttpRequest' }"
+            :headers="{
+              'x-csrf-token': token,
+              'X-Requested-with': 'XMLHttpRequest',
+            }"
             action="/app/uploadImageCategory"
             :on-success="handleSuccess"
             :on-error="handleError"
-            :format="['jpg','jpeg','png']"
+            :format="['jpg', 'jpeg', 'png']"
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
           >
             <div style="padding: 20px 0">
-              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+              <Icon
+                type="ios-cloud-upload"
+                size="52"
+                style="color: #3399ff"
+              ></Icon>
               <p>Click or drag a image here to upload</p>
             </div>
           </Upload>
@@ -72,34 +96,44 @@
             </div>
           </div>
           <div slot="footer">
-            <Button type="default" @click="addModal=false">Close</Button>
-            <Button
-              type="primary"
-              @click="addData"
-              :loading="isLoading"
-            >{{ isLoading?'Adding...':'Add category' }}</Button>
+            <Button type="default" @click="addModal = false">Close</Button>
+            <Button type="primary" @click="addData" :loading="isLoading">{{
+              isLoading ? "Adding..." : "Add category"
+            }}</Button>
           </div>
         </Modal>
 
         <!-- Edit Modal -->
-        <Modal title="Edit category" v-model="editModal" :closable="false" :mask-closable="false">
+        <Modal
+          title="Edit category"
+          v-model="editModal"
+          :closable="false"
+          :mask-closable="false"
+        >
           <Input v-model="editData.name" placeholder="Edit name tag" />
           <div class="space"></div>
           <Upload
             v-show="editData.iconImage == ''"
             ref="editUploads"
             type="drag"
-            :headers="{'x-csrf-token': token, 'X-Requested-with' :'XMLHttpRequest' }"
+            :headers="{
+              'x-csrf-token': token,
+              'X-Requested-with': 'XMLHttpRequest',
+            }"
             action="/app/uploadImageCategory"
             :on-success="handleSuccess"
             :on-error="handleError"
-            :format="['jpg','jpeg','png']"
+            :format="['jpg', 'jpeg', 'png']"
             :max-size="2048"
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
           >
             <div style="padding: 20px 0">
-              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+              <Icon
+                type="ios-cloud-upload"
+                size="52"
+                style="color: #3399ff"
+              ></Icon>
               <p>Click or drag a image here to upload</p>
             </div>
           </Upload>
@@ -112,11 +146,9 @@
 
           <div slot="footer">
             <Button type="default" @click="closeEditModal">Close</Button>
-            <Button
-              type="primary"
-              @click="updateData"
-              :loading="isLoading"
-            >{{ isLoading?'Editing...':'Edit category' }}</Button>
+            <Button type="primary" @click="updateData" :loading="isLoading">{{
+              isLoading ? "Editing..." : "Edit category"
+            }}</Button>
           </div>
         </Modal>
 
@@ -183,6 +215,7 @@ export default {
       let obj = {
         id: category.id,
         name: category.name,
+        iconImage: category.iconImage,
       };
       this.editData = obj;
       this.editModal = true;
