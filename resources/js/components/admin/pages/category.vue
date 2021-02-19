@@ -8,7 +8,7 @@
         >
           <p class="_title0">
             Categories
-            <Button @click="addModal = true">
+            <Button @click="addModal = true" v-if="isWrite">
               <Icon type="md-add" />Add Category
             </Button>
           </p>
@@ -20,7 +20,7 @@
                 <th>Icon Image</th>
                 <th>Nama Category</th>
                 <th>Created at</th>
-                <th>Action</th>
+                <th v-if="isUpdate || isDelete">Action</th>
               </tr>
 
               <!-- ITEMS -->
@@ -35,14 +35,16 @@
                 </td>
                 <td class="_table_name">{{ category.name }}</td>
                 <td>{{ category.created_at }}</td>
-                <td>
+                <td v-if="isUpdate || isDelete">
                   <Button
+                    v-if="isUpdate"
                     type="info"
                     size="small"
                     @click="showEditModal(category, i)"
                     >Edit</Button
                   >
                   <Button
+                    v-if="isDelete"
                     type="error"
                     size="small"
                     @click="showDeleteModal(category, i)"
@@ -57,6 +59,7 @@
         <!-- Add Modal -->
         <Modal
           title="Add category"
+          v-if="isWrite"
           v-model="addModal"
           :closable="false"
           :mask-closable="false"
@@ -105,6 +108,7 @@
 
         <!-- Edit Modal -->
         <Modal
+          v-if="isUpdate"
           title="Edit category"
           v-model="editModal"
           :closable="false"
@@ -153,7 +157,7 @@
         </Modal>
 
         <!-- Delete Modal -->
-        <deleteModal></deleteModal>
+        <deleteModal v-if="isDelete"></deleteModal>
       </div>
     </div>
   </div>
@@ -186,100 +190,122 @@ export default {
   },
   methods: {
     async addData() {
-      if (this.data.name.trim() == "") {
-        return this.error("Category name is required");
-      }
-      if (this.data.iconImage.trim() == "") {
-        return this.error("Icon image is required");
-      }
-      this.isLoading = true;
-      const res = await this.callApi("post", "app/createCategory", this.data);
-      if (res.status == 201) {
-        this.success("Category has been added successfully");
-        this.dataCategories.unshift(res.data);
-        this.data.name = "";
-        this.data.iconImage = "";
-        this.addModal = false;
-        this.isLoading = false;
-      } else if (res.status == 422) {
-        for (let i in res.data.errors) {
-          this.error(res.data.errors[i][0]);
+      if (this.isWrite) {
+        if (this.data.name.trim() == "") {
+          return this.error("Category name is required");
         }
+        if (this.data.iconImage.trim() == "") {
+          return this.error("Icon image is required");
+        }
+        this.isLoading = true;
+        const res = await this.callApi("post", "app/createCategory", this.data);
+        if (res.status == 201) {
+          this.success("Category has been added successfully");
+          this.dataCategories.unshift(res.data);
+          this.data.name = "";
+          this.data.iconImage = "";
+          this.addModal = false;
+          this.isLoading = false;
+        } else if (res.status == 422) {
+          for (let i in res.data.errors) {
+            this.error(res.data.errors[i][0]);
+          }
+        } else {
+          this.wrong();
+        }
+        this.isLoading = false;
       } else {
         this.wrong();
       }
-      this.isLoading = false;
     },
 
     showEditModal(category, index) {
-      let obj = {
-        id: category.id,
-        name: category.name,
-        iconImage: category.iconImage,
-      };
-      this.editData = obj;
-      this.editModal = true;
-      this.isEditing = true;
-      this.index = index;
+      if (this.isUpdate) {
+        let obj = {
+          id: category.id,
+          name: category.name,
+          iconImage: category.iconImage,
+        };
+        this.editData = obj;
+        this.editModal = true;
+        this.isEditing = true;
+        this.index = index;
+      } else {
+        this.wrong();
+      }
     },
 
     async updateData() {
-      if (this.editData.name.trim() == "") {
-        return this.error("Category name is required");
-      }
-      if (this.editData.iconImage.trim() == "") {
-        return this.error("Icon image is required");
-      }
-      this.isLoading = true;
-      const res = await this.callApi(
-        "post",
-        "app/updateCategory",
-        this.editData
-      );
-      if (res.status == 200) {
-        this.success("Tag has been edited successfully");
-        this.dataCategories[this.index].name = this.editData.name;
-        this.editModal = false;
-        this.isLoading = false;
-      } else if (res.status == 422) {
-        for (let i in res.data.errors) {
-          this.error(res.data.errors[i][0]);
+      if (this.isUpdate) {
+        if (this.editData.name.trim() == "") {
+          return this.error("Category name is required");
         }
+        if (this.editData.iconImage.trim() == "") {
+          return this.error("Icon image is required");
+        }
+        this.isLoading = true;
+        const res = await this.callApi(
+          "post",
+          "app/updateCategory",
+          this.editData
+        );
+        if (res.status == 200) {
+          this.success("Tag has been edited successfully");
+          this.dataCategories[this.index].name = this.editData.name;
+          this.editModal = false;
+          this.isLoading = false;
+        } else if (res.status == 422) {
+          for (let i in res.data.errors) {
+            this.error(res.data.errors[i][0]);
+          }
+        } else {
+          this.wrong();
+        }
+        this.isLoading = false;
       } else {
         this.wrong();
       }
-      this.isLoading = false;
     },
 
     showDeleteModal(category, i) {
-      const deleteObj = {
-        title: "Category",
-        deleteModal: true,
-        url: "app/deleteCategory",
-        data: category,
-        index: i,
-        isDeleted: false,
-      };
-      this.$store.commit("setDeleteModalObj", deleteObj);
+      if (this.isDelete) {
+        const deleteObj = {
+          title: "Category",
+          deleteModal: true,
+          url: "app/deleteCategory",
+          data: category,
+          index: i,
+          isDeleted: false,
+        };
+        this.$store.commit("setDeleteModalObj", deleteObj);
+      } else {
+        this.wrong();
+      }
     },
 
     async deleteCategory() {
-      this.isLoading = true;
-      const res = await this.callApi(
-        "delete",
-        "app/deleteCategory",
-        this.deleteData
-      );
-      if (res.status == 200) {
-        this.dataCategories.splice(this.index, 1);
-        this.isLoading = false;
-        this.deleteModal = false;
-        this.success(
-          "Category " + this.deleteData.name + " has been deleted successfully!"
+      if (this.isDelete) {
+        this.isLoading = true;
+        const res = await this.callApi(
+          "delete",
+          "app/deleteCategory",
+          this.deleteData
         );
+        if (res.status == 200) {
+          this.dataCategories.splice(this.index, 1);
+          this.isLoading = false;
+          this.deleteModal = false;
+          this.success(
+            "Category " +
+              this.deleteData.name +
+              " has been deleted successfully!"
+          );
+        } else {
+          this.wrong();
+          this.isLoading = false;
+        }
       } else {
         this.wrong();
-        this.isLoading = false;
       }
     },
 
@@ -313,21 +339,25 @@ export default {
       });
     },
     async deleteImage(isAdd = true) {
-      let image;
-      if (isAdd) {
-        image = this.data.iconImage;
-        this.data.iconImage = "";
-        this.$refs.uploads.clearFiles();
+      if (this.isDelete) {
+        let image;
+        if (isAdd) {
+          image = this.data.iconImage;
+          this.data.iconImage = "";
+          this.$refs.uploads.clearFiles();
+        } else {
+          image = this.editData.iconImage;
+          this.editData.iconImage = "";
+          this.$refs.editUploads.clearFiles();
+        }
+        const res = await this.callApi("delete", "app/deleteImageCategory", {
+          imageName: image,
+        });
+        if (res.status != 200) {
+          this.data.iconImage = image;
+          this.wrong();
+        }
       } else {
-        image = this.editData.iconImage;
-        this.editData.iconImage = "";
-        this.$refs.editUploads.clearFiles();
-      }
-      const res = await this.callApi("delete", "app/deleteImageCategory", {
-        imageName: image,
-      });
-      if (res.status != 200) {
-        this.data.iconImage = image;
         this.wrong();
       }
     },
@@ -356,7 +386,7 @@ export default {
   watch: {
     getDeleteObj(obj) {
       if (obj.isDeleted) {
-        this.dataTags.splice(obj.index, 1);
+        this.dataCategories.splice(obj.index, 1);
       }
     },
   },

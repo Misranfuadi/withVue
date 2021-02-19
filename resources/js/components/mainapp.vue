@@ -4,7 +4,7 @@
       <!--========== ADMIN SIDE MENU one ========-->
       <div class="_1side_menu">
         <div class="_1side_menu_logo">
-          <h3 style="text-align:center;">Logo Image</h3>
+          <h3 style="text-align: center">Logo Image</h3>
           <!--<img src="/img/logo.jpg" style="width: 108px;margin-left: 68px;"/>-->
         </div>
 
@@ -27,9 +27,7 @@
                 </li>
               </div>
               <li>
-                <a href="/logout">
-                  <Icon type="md-log-out" />Logout
-                </a>
+                <a href="/logout"> <Icon type="md-log-out" />Logout </a>
               </li>
             </ul>
           </div>
